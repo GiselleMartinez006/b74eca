@@ -80,17 +80,23 @@ const Home = ({ user, logout }) => {
 
   const addNewConvo = useCallback(
     (recipientId, message) => {
-      var newConversation= conversations.map((convo) => {
+      var convoCopy = conversations.map((convo) => {
         if (convo.otherUser.id === recipientId) {
-          convo.messages.push( message);
-          convo.latestMessageText = message.text;
-          convo.id = message.conversationId;
-          return convo
+          const newConvo = {
+            ...convo, 
+            latestMessageText: message.text,
+            id: message.conversationId, 
+            messages: [...convo.messages, message]
+          }
+          // convo.messages.push( message);
+          // convo.latestMessageText = message.text;
+          // convo.id = message.conversationId;
+          return newConvo
         } else {
           return convo
         }
       });
-      setConversations(newConversation);
+      setConversations(convoCopy);
     },
     [setConversations, conversations],
   );
@@ -109,9 +115,14 @@ const Home = ({ user, logout }) => {
       }
       var updatedConversations= conversations.map((convo) => {
         if (convo.id === message.conversationId) {
-          convo.messages.push( message);
-          convo.latestMessageText = message.text;
-          return convo
+          const updatedConvo = {
+            ...convo, 
+            latestMessageText: message.text,
+            messages: [...convo.messages, message]
+          }
+          // convo.messages.push( message);
+          // convo.latestMessageText = message.text;
+          return updatedConvo
         }else {
           return convo
         }
@@ -184,16 +195,12 @@ const Home = ({ user, logout }) => {
     }
   }, [user, history, isLoggedIn]);
 
-  const sortMessages = (data) => {
-    const sorted = data.map(convo=>convo.messages.reverse())
-    return sorted
-  }
-
+  
   useEffect(() => {
     const fetchConversations = async () => {
       try {
         const { data } = await axios.get("/api/conversations");
-        sortMessages(data)
+        data.forEach(convo=>convo.messages.reverse())
         setConversations(data);
       } catch (error) {
         console.error(error);
