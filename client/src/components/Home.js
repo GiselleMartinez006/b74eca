@@ -62,10 +62,10 @@ const Home = ({ user, logout }) => {
     });
   };
 
-  const postMessage = (body) => {
+  const postMessage = async (body) => {
     try {
-      const data = saveMessage(body);
-
+      const data = await saveMessage(body);
+    
       if (!body.conversationId) {
         addNewConvo(body.recipientId, data.message);
       } else {
@@ -80,14 +80,17 @@ const Home = ({ user, logout }) => {
 
   const addNewConvo = useCallback(
     (recipientId, message) => {
-      conversations.forEach((convo) => {
+      var newConversation= conversations.map((convo) => {
         if (convo.otherUser.id === recipientId) {
-          convo.messages.push(message);
+          convo.messages.push( message);
           convo.latestMessageText = message.text;
           convo.id = message.conversationId;
+          return convo
+        } else {
+          return convo
         }
       });
-      setConversations(conversations);
+      setConversations(newConversation);
     },
     [setConversations, conversations],
   );
@@ -104,14 +107,17 @@ const Home = ({ user, logout }) => {
         newConvo.latestMessageText = message.text;
         setConversations((prev) => [newConvo, ...prev]);
       }
-
-      conversations.forEach((convo) => {
+      var updatedConversations= conversations.map((convo) => {
         if (convo.id === message.conversationId) {
-          convo.messages.push(message);
+          convo.messages.push( message);
           convo.latestMessageText = message.text;
+          return convo
+        }else {
+          return convo
         }
       });
-      setConversations(conversations);
+
+      setConversations(updatedConversations);
     },
     [setConversations, conversations],
   );
@@ -178,10 +184,16 @@ const Home = ({ user, logout }) => {
     }
   }, [user, history, isLoggedIn]);
 
+  const sortMessages = (data) => {
+    const sorted = data.map(convo=>convo.messages.reverse())
+    return sorted
+  }
+
   useEffect(() => {
     const fetchConversations = async () => {
       try {
         const { data } = await axios.get("/api/conversations");
+        sortMessages(data)
         setConversations(data);
       } catch (error) {
         console.error(error);
