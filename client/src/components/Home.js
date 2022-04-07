@@ -62,9 +62,9 @@ const Home = ({ user, logout }) => {
     });
   };
 
-  const postMessage = (body) => {
+  const postMessage = async (body) => {
     try {
-      const data = saveMessage(body);
+      const data = await saveMessage(body);
 
       if (!body.conversationId) {
         addNewConvo(body.recipientId, data.message);
@@ -80,16 +80,23 @@ const Home = ({ user, logout }) => {
 
   const addNewConvo = useCallback(
     (recipientId, message) => {
-      conversations.forEach((convo) => {
+      const convoCopy = conversations.map((convo) => {
         if (convo.otherUser.id === recipientId) {
-          convo.messages.push(message);
-          convo.latestMessageText = message.text;
-          convo.id = message.conversationId;
+          const newConvo = {
+            ...convo,
+            latestMessageText: message.text,
+            id: message.conversationId,
+            messages: [...convo.messages, message],
+          };
+
+          return newConvo;
+        } else {
+          return convo;
         }
       });
-      setConversations(conversations);
+      setConversations(convoCopy);
     },
-    [setConversations, conversations],
+    [setConversations, conversations]
   );
   const addMessageToConversation = useCallback(
     (data) => {
@@ -104,16 +111,23 @@ const Home = ({ user, logout }) => {
         newConvo.latestMessageText = message.text;
         setConversations((prev) => [newConvo, ...prev]);
       }
-
-      conversations.forEach((convo) => {
+      const updatedConversations = conversations.map((convo) => {
         if (convo.id === message.conversationId) {
-          convo.messages.push(message);
-          convo.latestMessageText = message.text;
+          const updatedConvo = {
+            ...convo,
+            latestMessageText: message.text,
+            messages: [...convo.messages, message],
+          };
+
+          return updatedConvo;
+        } else {
+          return convo;
         }
       });
-      setConversations(conversations);
+
+      setConversations(updatedConversations);
     },
-    [setConversations, conversations],
+    [setConversations, conversations]
   );
 
   const setActiveChat = (username) => {
@@ -130,7 +144,7 @@ const Home = ({ user, logout }) => {
         } else {
           return convo;
         }
-      }),
+      })
     );
   }, []);
 
@@ -144,7 +158,7 @@ const Home = ({ user, logout }) => {
         } else {
           return convo;
         }
-      }),
+      })
     );
   }, []);
 
@@ -182,6 +196,7 @@ const Home = ({ user, logout }) => {
     const fetchConversations = async () => {
       try {
         const { data } = await axios.get("/api/conversations");
+        data.forEach((convo) => convo.messages.reverse());
         setConversations(data);
       } catch (error) {
         console.error(error);
