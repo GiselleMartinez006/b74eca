@@ -27,34 +27,37 @@ export const useStyles = makeStyles((theme) => ({
     },
   },
   leftSideContentWrapper: {
-    marginTop: "15rem",
+    marginTop: "200px",
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
     marginRight: "auto",
     marginLeft: "auto",
     position: "relative",
-    maxWidth: "60%",
+    maxWidth: "70%",
     [theme.breakpoints.down("sm")]: {
-      marginTop: "5rem",
+      marginTop: "2rem",
       // fontSize: "1.5rem",
     },
   },
   decorativeHeading: {
-    fontSize: "2rem",
+    fontSize: "26px",
+    lineHeight: "40px",
     color: "white",
     textAlign: "center",
-    marginTop: "2.5rem",
+    fontWeight: 400,
+    marginTop: "40px",
     [theme.breakpoints.down("sm")]: {
-      marginTop: "2rem",
-      fontSize: "1.5rem",
+      marginTop: "10px",
+      lineHeight: "22px",
+      fontSize: "20px",
     },
   },
   iconDimensions: {
-    width: "100px",
+    width: "67px",
     height: "auto",
-    [theme.breakpoints.down("sm")]: {
-      width: "80px",
-    },
+    // [theme.breakpoints.down("sm")]: {
+    //   width: "80px",
+    // },
   },
 }));

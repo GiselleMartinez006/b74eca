@@ -8,7 +8,7 @@ import { useStyles } from "../styles/auth/authSwitchStyles";
 const AuthSwitch = (props) => {
   const classes = useStyles();
   const theme = useTheme();
-  const mediaQuery = useMediaQuery(theme.breakpoints.down("sm"));
+  const mediaQuery = useMediaQuery(theme.breakpoints.down("sm"), {noSsr: true});
 
   const [switchToggle, setSwitchToggle] = useState(false);
 

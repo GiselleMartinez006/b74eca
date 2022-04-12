@@ -8,7 +8,7 @@ const LeftSidebar = () => {
   const classes = useStyles();
 
   return (
-    <Grid item md={4}>
+    <Grid item md={5}>
       <Box className={classes.leftSideWrapper}>
         <Box className={classes.leftBackgroundTint}>
           <Box className={classes.leftSideContentWrapper}>

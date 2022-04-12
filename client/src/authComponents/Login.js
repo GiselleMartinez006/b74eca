@@ -1,23 +1,17 @@
 import React, { useEffect } from "react";
 import { useHistory } from "react-router-dom";
+import { Grid, Box, FormControl, TextField, Button } from "@material-ui/core";
+
 import { useTheme, useMediaQuery } from "@material-ui/core";
-import {
-  Grid,
-  Box,
-  Typography,
-  Button,
-  FormControl,
-  TextField,
-} from "@material-ui/core";
-
-import { useStyles, inputProps } from "../styles/auth/authStyles";
-
-import LeftSidebar from "./LeftSidebar";
+// import { useStyles as formStyles } from "../styles/auth/authFormStyles";
+import { useStyles,inputProps } from "../styles/auth/authStyles";
 import AuthSwitch from "./AuthSwitch";
+import LeftSidebar from "./LeftSidebar";
+import AuthForm from "./AuthForm";
 
 const Login = ({ user, login }) => {
   const history = useHistory();
-  const classes = { ...useStyles() };
+  const classes = { ...useStyles()};
   const theme = useTheme();
   const mediaQuery = useMediaQuery(theme.breakpoints.down("sm"));
 
@@ -36,76 +30,65 @@ const Login = ({ user, login }) => {
   }, [user, history]);
 
   return (
-    <Grid container sx={{ height: "100vh", width: "100vw" }}>
+    <Grid container>
       <LeftSidebar />
-      <Grid container item md={8}>
+      <Grid container item md={7}>
         <Box className={classes.rightSideWrapper}>
           <AuthSwitch
             label="Don't have an account?"
             btnText="Create Account"
             path="register"
           />
-          <form onSubmit={handleLogin} className={classes.formLogin}>
-            <Grid className={classes.formWrapperLogin}>
-              <Typography className={classes.formHeadingLogin}>
-                Welcome Back!
-              </Typography>
-              <Grid className={classes.formRowLogin}>
-                <FormControl margin="normal" required>
-                  <TextField
-                    aria-label="username"
-                    label="Username"
-                    name="username"
-                    type="text"
-                    InputProps={inputProps(mediaQuery, classes).input}
-                    InputLabelProps={inputProps(mediaQuery, classes).label}
-                  />
-                </FormControl>
-              </Grid>
-              <Grid className={classes.formRowLogin}>
-                <FormControl margin="normal" required>
-                  <TextField
-                    label="Password"
-                    aria-label="password"
-                    type="password"
-                    name="password"
-                    InputProps={{
-                      classes: {
-                        input: classes.formInput,
-                      },
-                      endAdornment: (
-                        <Button
-                          color="primary"
-                          className={classes.forgotPwdButton}
-                        >
-                          Forgot?
-                        </Button>
-                      ),
-                      style: {
-                        height: mediaQuery ? 45 : 60,
-                        marginTop: mediaQuery ? 15 : 25,
-                        width: mediaQuery ? "50vw" : "30vw",
-                      },
-                    }}
-                    InputLabelProps={inputProps(mediaQuery, classes).label}
-
-                    // className={classes.formInput}
-                  />
-                </FormControl>
-              </Grid>
-              <Grid className={classes.formButtonRow}>
-                <Button
-                  className={classes.formButton}
-                  type="submit"
-                  color="primary"
-                  variant="contained"
-                  size="large"
-                >
-                  Login
-                </Button>
-              </Grid>
-            </Grid>
-          </form>
+          <AuthForm
+            propTheme={theme.loginForm}
+            headingText="Welcome back!"
+            btnText="Login"
+            handleSubmit={handleLogin}
+          >
+            <FormControl margin="normal" required>
+              <TextField
+                aria-label="username"
+                label="Username"
+                name="username"
+                type="text"
+                InputProps={inputProps(mediaQuery, classes).input}
+                InputLabelProps={inputProps(mediaQuery, classes).label}
+              />
+            </FormControl>
+            <FormControl margin="normal" required>
+              <TextField
+                label="Password"
+                aria-label="password"
+                type="password"
+                name="password"
+                InputProps={{
+                  input: {
+                    classes: {
+                      input: classes.formInput,
+                    },
+                    style: {
+                      // height: 45,//mediaQuery ? "66px" : "66px",
+                      marginTop: mediaQuery ? 15 : 25,
+                    },
+                  },
+                  endAdornment: (
+                    <Button color="primary" className={classes.forgotPwdButton}>
+                      Forgot?
+                    </Button>
+                  ),
+                  label: {
+                    style: {
+                      lineHeight: "19px",
+                      fontSize: "18px", // mediaQuery ? 20 : "14px",
+                      color: "#B0B0B0",
+                    },
+                  },
+                }}
+                InputLabelProps={inputProps(mediaQuery, classes).label}
+                className={classes.formInput}
+              />
+            </FormControl>
+          </AuthForm>
         </Box>
       </Grid>
     </Grid>
