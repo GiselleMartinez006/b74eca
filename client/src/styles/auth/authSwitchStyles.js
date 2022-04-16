@@ -2,7 +2,7 @@ import { makeStyles } from "@material-ui/core/styles";
 
 export const useStyles = makeStyles((theme) => ({
   // switch to Signup/Login controls
-  switchWrapper: {
+  switchContainer: {
     display: "flex",
     justifyContent: "flex-end",
     flexWrap: "wrap",
@@ -13,22 +13,21 @@ export const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.down("sm")]: {
       justifyContent: "center",
       paddingRight: "0",
-    //   padding: "2rem",
-    //   paddingBottom: "0",
-    //   paddingTop: "1rem",
-    //   height: "5rem",
     },
+  },
+  switchWrapper: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
   },
   switchButton: {
     boxShadow: "0px 2px 12px rgba(74, 106, 149, 0.2)",
     borderRadius: "5px",
     height: "54px",
     width: "140px",
-    //  140 x 54
     [theme.breakpoints.down("sm")]: {
       width: "140px",
       height: "45px",
-    //   height: "70%",
     },
   },
   switchLabel: {
@@ -45,7 +44,11 @@ export const useStyles = makeStyles((theme) => ({
     lineHeight: "19px",
     color: "#B0B0B0",
     [theme.breakpoints.down("sm")]: {
-    marginRight: "0"
+      marginRight: "0"
+    },
+    [theme.breakpoints.up(1050)]: {
+      minWidth: "12vw",
+      marginRight: "0"
     }
   },
   buttonText: {
@@ -53,7 +56,6 @@ export const useStyles = makeStyles((theme) => ({
     lineHeight: "19px",
     fontWeight: "600",
     textDecoration: "none",
-    // fontSize: "1rem",
     color: "#3A8DFF",
   },
 }));

@@ -22,7 +22,7 @@ export const useStyles = makeStyles((theme) => ({
     display: "flex",
     alignItems: "flex-start",
     [theme.breakpoints.down("sm")]: {
-      // paddingTop: "5rem",
+
       position: "absolute",
     },
   },
@@ -37,7 +37,11 @@ export const useStyles = makeStyles((theme) => ({
     maxWidth: "70%",
     [theme.breakpoints.down("sm")]: {
       marginTop: "2rem",
-      // fontSize: "1.5rem",
+    },
+    [theme.breakpoints.up(1050)]: {
+      marginTop: "40%",
+      maxWidth: "50%"
+
     },
   },
   decorativeHeading: {
@@ -52,12 +56,20 @@ export const useStyles = makeStyles((theme) => ({
       lineHeight: "22px",
       fontSize: "20px",
     },
+    [theme.breakpoints.up(1050)]: {
+      lineHeight: "2.5rem",
+      fontSize: "2rem",
+
+    },
   },
   iconDimensions: {
-    width: "67px",
     height: "auto",
-    // [theme.breakpoints.down("sm")]: {
-    //   width: "80px",
-    // },
+    width: "67px",
+    [theme.breakpoints.up(1050)]: {
+      width: "100px",
+
+    },
+
   },
 }));
+
