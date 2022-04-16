@@ -1,22 +1,22 @@
 import React from "react";
 import { Box, Typography, Button } from "@material-ui/core";
-import { useStyles } from "../styles/auth/authFormStyles";
+import { useStyles } from "../client/src/styles/auth/authFormStyles";
 import { useTheme, useMediaQuery } from "@material-ui/core";
 
 
-const AuthForm = ({ handleSubmit,propTheme, headingText, btnText, children }) => {
+const AuthForm = ({ handleSubmit, propTheme, headingText, btnText, children }) => {
   const classes = useStyles()
   const theme = useTheme();
-  const mediaQuery = useMediaQuery(theme.breakpoints.down("sm"), {noSsr: true});
+  const mediaQuery = useMediaQuery(theme.breakpoints.down("sm"), { noSsr: true });
   console.log(propTheme.normalHeight, propTheme.mobileHeight)
   return (
-    <form onSubmit={handleSubmit} 
-    className={classes.form}
-    style={{minHeight: mediaQuery? propTheme.mobileHeight : propTheme.normalHeight}}
+    <form onSubmit={handleSubmit}
+      className={classes.form}
+      style={{ minHeight: mediaQuery ? propTheme.mobileHeight : propTheme.normalHeight }}
     >
-        {/* <Box className={classes.formHeadingRow}> */}
+
       <Typography className={classes.formHeading}>{headingText}</Typography>
-      {/* </Box> */}
+
       <Box className={classes.formWrapper}>
         {children.map((child, index) => (
           <Box key={index} className={classes.formRow}>

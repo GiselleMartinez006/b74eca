@@ -9,8 +9,7 @@ import {
 } from "@material-ui/core";
 
 import { useTheme, useMediaQuery } from "@material-ui/core";
-// import { useStyles as formStyles } from "../styles/auth/authFormStyles";
-import { useStyles, inputProps } from "../styles/auth/authStyles";
+import { useStyles, inputProps } from "../client/src/styles/auth/authStyles";
 import AuthSwitch from "./AuthSwitch";
 import LeftSidebar from "./LeftSidebar";
 import AuthForm from "./AuthForm";
@@ -20,7 +19,6 @@ const Signup = ({ user, register }) => {
   const classes = { ...useStyles() };
   const theme = useTheme();
   const mediaQuery = useMediaQuery(theme.breakpoints.down("sm"));
-  // console.log(theme, "Signup")
   const [formErrorMessage, setFormErrorMessage] = useState({});
 
   const handleRegister = async (event) => {
@@ -48,73 +46,76 @@ const Signup = ({ user, register }) => {
       <LeftSidebar />
       <Grid container item md={7}>
         <Box className={classes.rightSideWrapper}>
+
           <AuthSwitch
             label="Already have an account?"
             btnText="Login"
             path="login"
           />
-          <AuthForm
-            propTheme={theme.signupForm}
-            headingText="Create an account."
-            btnText="Create"
-            handleSubmit={handleRegister}
-          >
-            <FormControl>
-              <TextField
-                aria-label="username"
-                label="Username"
-                name="username"
-                type="text"
-                required
-                InputProps={inputProps(mediaQuery, classes).input}
-                InputLabelProps={inputProps(mediaQuery, classes).label}
-              />
-            </FormControl>
+          <Box className={classes.rightSideFormWrapper}>
+            <AuthForm
+              propTheme={theme.signupForm}
+              headingText="Create an account."
+              btnText="Create"
+              handleSubmit={handleRegister}
+            >
+              <FormControl>
+                <TextField
+                  aria-label="username"
+                  label="Username"
+                  name="username"
+                  type="text"
+                  required
+                  InputProps={inputProps(mediaQuery, classes).input}
+                  InputLabelProps={inputProps(mediaQuery, classes).label}
+                />
+              </FormControl>
 
-            <FormControl>
-              <TextField
-                label="E-mail address"
-                aria-label="e-mail address"
-                type="email"
-                name="email"
-                required
-                InputProps={inputProps(mediaQuery, classes).input}
-                InputLabelProps={inputProps(mediaQuery, classes).label}
-              />
-            </FormControl>
+              <FormControl>
+                <TextField
+                  label="E-mail address"
+                  aria-label="e-mail address"
+                  type="email"
+                  name="email"
+                  required
+                  InputProps={inputProps(mediaQuery, classes).input}
+                  InputLabelProps={inputProps(mediaQuery, classes).label}
+                />
+              </FormControl>
 
-            <FormControl error={!!formErrorMessage.confirmPassword}>
-              <TextField
-                aria-label="password"
-                label="Password"
-                type="password"
-                inputProps={{ minLength: 6 }}
-                name="password"
-                required
-                InputProps={inputProps(mediaQuery, classes).input}
-                InputLabelProps={inputProps(mediaQuery, classes).label}
-              />
-              <FormHelperText>
-                {formErrorMessage.confirmPassword}
-              </FormHelperText>
-            </FormControl>
+              <FormControl error={!!formErrorMessage.confirmPassword}>
+                <TextField
+                  aria-label="password"
+                  label="Password"
+                  type="password"
+                  inputProps={{ minLength: 6 }}
+                  name="password"
+                  required
+                  InputProps={inputProps(mediaQuery, classes).input}
+                  InputLabelProps={inputProps(mediaQuery, classes).label}
+                />
+                <FormHelperText>
+                  {formErrorMessage.confirmPassword}
+                </FormHelperText>
+              </FormControl>
 
-            <FormControl error={!!formErrorMessage.confirmPassword}>
-              <TextField
-                label="Confirm Password"
-                aria-label="confirm password"
-                type="password"
-                inputProps={{ minLength: 6 }}
-                name="confirmPassword"
-                required
-                InputProps={inputProps(mediaQuery, classes).input}
-                InputLabelProps={inputProps(mediaQuery, classes).label}
-              />
-              <FormHelperText>
-                {formErrorMessage.confirmPassword}
-              </FormHelperText>
-            </FormControl>
-          </AuthForm>
+              <FormControl error={!!formErrorMessage.confirmPassword}>
+                <TextField
+                  label="Confirm Password"
+                  aria-label="confirm password"
+                  type="password"
+                  inputProps={{ minLength: 6 }}
+                  name="confirmPassword"
+                  required
+                  InputProps={inputProps(mediaQuery, classes).input}
+                  InputLabelProps={inputProps(mediaQuery, classes).label}
+                />
+                <FormHelperText>
+                  {formErrorMessage.confirmPassword}
+                </FormHelperText>
+              </FormControl>
+            </AuthForm>
+          </Box>
         </Box>
       </Grid>
     </Grid>

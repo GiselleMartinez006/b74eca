@@ -1,6 +1,6 @@
 import React from "react";
 import { Grid, Box, Typography, Icon } from "@material-ui/core";
-import { useStyles } from "../styles/auth/leftSidebarStyles";
+import { useStyles } from "../client/src/styles/auth/leftSidebarStyles";
 
 import svg from "./../assets/bubble.svg";
 
@@ -13,7 +13,7 @@ const LeftSidebar = () => {
         <Box className={classes.leftBackgroundTint}>
           <Box className={classes.leftSideContentWrapper}>
             <Icon className={classes.iconDimensions}>
-              <img alt="" className={classes.iconDimensions} src={svg} />
+              <img alt="message bubble icon" className={classes.iconDimensions} src={svg} />
             </Icon>
             <Typography className={classes.decorativeHeading}>
               Converse with anyone with any language

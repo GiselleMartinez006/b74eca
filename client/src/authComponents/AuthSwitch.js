@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useTheme, useMediaQuery } from "@material-ui/core";
-import { Grid, Typography, Button } from "@material-ui/core";
+import { Grid, Box, Typography, Button } from "@material-ui/core";
 
-import { useStyles } from "../styles/auth/authSwitchStyles";
+import { useStyles } from "../client/src/styles/auth/authSwitchStyles";
 
 const AuthSwitch = (props) => {
   const classes = useStyles();
   const theme = useTheme();
-  const mediaQuery = useMediaQuery(theme.breakpoints.down("sm"), {noSsr: true});
+  const mediaQuery = useMediaQuery(theme.breakpoints.down("sm"), { noSsr: true });
 
   const [switchToggle, setSwitchToggle] = useState(false);
 
@@ -16,17 +16,18 @@ const AuthSwitch = (props) => {
     setSwitchToggle(!switchToggle);
   };
   return (
-    <Grid item className={classes.switchWrapper}>
+    <Grid item className={classes.switchContainer}>
       {!mediaQuery ? (
-        <>
+        <Box className={classes.switchWrapper}>
+
           <Typography className={classes.switchLabel}>{props.label}</Typography>
 
           <Link href={`/${props.path}`} to={`/${props.path}`}>
             <Button className={classes.switchButton}>
-              <p className={classes.buttonText}>{props.btnText}</p>
+              <Typography className={classes.buttonText}>{props.btnText}</Typography>
             </Button>
           </Link>
-        </>
+        </Box>
       ) : !switchToggle ? (
         <Typography onClick={handleSwitch} className={classes.switchLabel}>
           {props.label}
@@ -34,7 +35,7 @@ const AuthSwitch = (props) => {
       ) : (
         <Link href={`/${props.path}`} to={`/${props.path}`}>
           <Button className={classes.switchButton}>
-            <p className={classes.buttonText}>{props.btnText}</p>
+            <Typography className={classes.buttonText}>{props.btnText}</Typography>
           </Button>
         </Link>
       )}
