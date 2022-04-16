@@ -1,6 +1,6 @@
 import React from "react";
 import { Grid, Box, Typography, Icon } from "@material-ui/core";
-import { useStyles } from "../client/src/styles/auth/leftSidebarStyles";
+import { useStyles } from "../styles/auth/leftSidebarStyles";
 
 import svg from "./../assets/bubble.svg";
 

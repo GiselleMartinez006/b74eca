@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { useTheme, useMediaQuery } from "@material-ui/core";
 import { Grid, Box, Typography, Button } from "@material-ui/core";
 
-import { useStyles } from "../client/src/styles/auth/authSwitchStyles";
+import { useStyles } from "../styles/auth/authSwitchStyles";
 
 const AuthSwitch = (props) => {
   const classes = useStyles();

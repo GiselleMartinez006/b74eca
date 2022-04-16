@@ -1,6 +1,6 @@
 import React from "react";
 import { Box, Typography, Button } from "@material-ui/core";
-import { useStyles } from "../client/src/styles/auth/authFormStyles";
+import { useStyles } from "../styles/auth/authFormStyles";
 import { useTheme, useMediaQuery } from "@material-ui/core";
 
 

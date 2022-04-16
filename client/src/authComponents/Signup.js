@@ -9,7 +9,7 @@ import {
 } from "@material-ui/core";
 
 import { useTheme, useMediaQuery } from "@material-ui/core";
-import { useStyles, inputProps } from "../client/src/styles/auth/authStyles";
+import { useStyles, inputProps } from "../styles/auth/authStyles";
 import AuthSwitch from "./AuthSwitch";
 import LeftSidebar from "./LeftSidebar";
 import AuthForm from "./AuthForm";
