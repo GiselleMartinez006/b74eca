@@ -1,11 +1,6 @@
 import { makeStyles } from "@material-ui/core/styles";
 export const useStyles = makeStyles((theme) => ({
-  root: {
-    display: "flex",
-    flexGrow: 8,
-    flexDirection: "column",
-    alignItems: "center",
-  },
+ 
   gridContainer: {
     height: "100vh", width: "100vw"
   },
