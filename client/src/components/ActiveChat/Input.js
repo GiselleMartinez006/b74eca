@@ -4,6 +4,7 @@ import {
   FormControl,
   Input as FileInput,
   Typography,
+  Box,
   FilledInput,
   IconButton,
 } from "@material-ui/core";
@@ -77,31 +78,27 @@ const Input = ({ otherUser, conversationId, user, postMessage }) => {
     const form = event.currentTarget;
     const formElements = form.elements;
 
-    const cloud_name = "gmtnezschez";
-    // I set my preset to be the same as my cloudname
-    const preset = cloud_name;
+    const cloud_name = process.env.REACT_APP_CLOUD_NAME;
+    const preset = process.env.REACT_APP_PRESET;
     const url = `https://api.cloudinary.com/v1_1/${cloud_name}/image/upload`;
 
     setImages([]);
     setImgPreview([]);
-    var attachments = [];
-    await setLoading(true);
-    for (let i = 0; i < images.length; i++) {
-      let file = images[i][0];
+    setLoading(true);
+
+    var promises = images.map(img => {
+      let file = img[0];
 
       const data = new FormData();
       data.append("file", file);
       data.append("upload_preset", preset);
-      // data.append("cloud_name", "*****");
 
       const instance = axios.create();
-      await instance.post(url, data).then((res) => {
-        console.log(res);
-        console.log(res.data.url);
-        attachments.push(res.data.url);
-      });
-    }
-    console.log(attachments);
+      return instance.post(url, data)
+    })
+
+    var resolvedPromises = await Promise.all(promises)
+    const attachments = resolvedPromises.map(response => response.data.url)
 
     // add sender user info if posting to a brand new convo, so that the other user will have access to username, profile pic, etc.
     const reqBody = {
@@ -111,10 +108,10 @@ const Input = ({ otherUser, conversationId, user, postMessage }) => {
       sender: conversationId ? null : user,
       attachments: attachments,
     };
-    await postMessage(reqBody);
-    setLoading(false);
-
     setText("");
+    setLoading(false);
+    await postMessage(reqBody);
+
   };
 
   const handleDelete = (index) => {
@@ -123,7 +120,7 @@ const Input = ({ otherUser, conversationId, user, postMessage }) => {
   return (
     <form className={classes.root} onSubmit={handleSubmit}>
       {imgPreview.length || loading ? (
-        <div className={classes.previewWrapper}>
+        <Box className={classes.previewWrapper}>
           {!loading ? (
             imgPreview.map((img, index) => (
               <img
@@ -137,7 +134,7 @@ const Input = ({ otherUser, conversationId, user, postMessage }) => {
           ) : (
             <Typography variate="h1"> Loading... </Typography>
           )}
-        </div>
+        </Box>
       ) : (
         ""
       )}
