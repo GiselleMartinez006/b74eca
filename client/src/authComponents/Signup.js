@@ -1,18 +1,24 @@
-import React, { useState, useEffect } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import {
   Grid,
   Box,
-  Typography,
-  Button,
   FormControl,
   TextField,
   FormHelperText,
-} from '@material-ui/core';
+} from "@material-ui/core";
+
+import { useTheme, useMediaQuery } from "@material-ui/core";
+import { useStyles, inputProps } from "../styles/auth/authStyles";
+import AuthSwitch from "./AuthSwitch";
+import LeftSidebar from "./LeftSidebar";
+import AuthForm from "./AuthForm";
 
 const Signup = ({ user, register }) => {
   const history = useHistory();
-
+  const classes = { ...useStyles() };
+  const theme = useTheme();
+  const mediaQuery = useMediaQuery(theme.breakpoints.down("sm"));
   const [formErrorMessage, setFormErrorMessage] = useState({});
 
   const handleRegister = async (event) => {
@@ -25,28 +31,34 @@ const Signup = ({ user, register }) => {
     const confirmPassword = formElements.confirmPassword.value;
 
     if (password !== confirmPassword) {
-      setFormErrorMessage({ confirmPassword: 'Passwords must match' });
+      setFormErrorMessage({ confirmPassword: "Passwords must match" });
       return;
     }
     await register({ username, email, password });
   };
 
   useEffect(() => {
-    if (user && user.id) history.push('/home');
+    if (user && user.id) history.push("/home");
   }, [user, history]);
 
   return (
-    <Grid container justifyContent="center">
-      <Box>
-        <Grid container item>
-          <Typography>Need to log in?</Typography>
-          <Link href="/login" to="/login">
-            <Button>Login</Button>
-          </Link>
-        </Grid>
-        <form onSubmit={handleRegister}>
-          <Grid>
-            <Grid>
+    <Grid container>
+      <LeftSidebar />
+      <Grid container item md={7}>
+        <Box className={classes.rightSideWrapper}>
+
+          <AuthSwitch
+            label="Already have an account?"
+            btnText="Login"
+            path="login"
+          />
+          <Box className={classes.rightSideFormWrapper}>
+            <AuthForm
+              propTheme={theme.signupForm}
+              headingText="Create an account."
+              btnText="Create"
+              handleSubmit={handleRegister}
+            >
               <FormControl>
                 <TextField
                   aria-label="username"
@@ -54,10 +66,11 @@ const Signup = ({ user, register }) => {
                   name="username"
                   type="text"
                   required
+                  InputProps={inputProps(mediaQuery, classes).input}
+                  InputLabelProps={inputProps(mediaQuery, classes).label}
                 />
               </FormControl>
-            </Grid>
-            <Grid>
+
               <FormControl>
                 <TextField
                   label="E-mail address"
@@ -65,10 +78,11 @@ const Signup = ({ user, register }) => {
                   type="email"
                   name="email"
                   required
+                  InputProps={inputProps(mediaQuery, classes).input}
+                  InputLabelProps={inputProps(mediaQuery, classes).label}
                 />
               </FormControl>
-            </Grid>
-            <Grid>
+
               <FormControl error={!!formErrorMessage.confirmPassword}>
                 <TextField
                   aria-label="password"
@@ -77,13 +91,14 @@ const Signup = ({ user, register }) => {
                   inputProps={{ minLength: 6 }}
                   name="password"
                   required
+                  InputProps={inputProps(mediaQuery, classes).input}
+                  InputLabelProps={inputProps(mediaQuery, classes).label}
                 />
                 <FormHelperText>
                   {formErrorMessage.confirmPassword}
                 </FormHelperText>
               </FormControl>
-            </Grid>
-            <Grid>
+
               <FormControl error={!!formErrorMessage.confirmPassword}>
                 <TextField
                   label="Confirm Password"
@@ -92,18 +107,17 @@ const Signup = ({ user, register }) => {
                   inputProps={{ minLength: 6 }}
                   name="confirmPassword"
                   required
+                  InputProps={inputProps(mediaQuery, classes).input}
+                  InputLabelProps={inputProps(mediaQuery, classes).label}
                 />
                 <FormHelperText>
                   {formErrorMessage.confirmPassword}
                 </FormHelperText>
               </FormControl>
-            </Grid>
-            <Button type="submit" variant="contained" size="large">
-              Create
-            </Button>
-          </Grid>
-        </form>
-      </Box>
+            </AuthForm>
+          </Box>
+        </Box>
+      </Grid>
     </Grid>
   );
 };
