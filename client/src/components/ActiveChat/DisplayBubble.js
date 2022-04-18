@@ -8,39 +8,29 @@ const DisplayBubble = ({ text, attachments, parentStyles }) => {
     const classes = { ...useStyles(), ...parentStyles() }
     return (
         <>
-            {attachments ? (
-                attachments.length === 1 ? (
-
+            {attachments && (
+                attachments.length === 1 && (
                     <img className={classes.img} alt="attachment" src={attachments[0]} />
-                ) : (
-                    ""
                 )
-            ) : (
-                ""
             )}
-            {text.length ? (
+            {text.length > 0 && (
                 <Box className={classes.bubble}>
                     <Typography className={classes.text}>{text}</Typography>
                 </Box>
-            ) : (
-                ""
             )}
             <Box>
                 {attachments
-                    ? attachments.length > 1
-                        ? attachments.map((attachment) => (
-                            <img
-                                key={attachment}
-                                alt="attachment"
-                                className={classes.grouppedImgs}
-                                src={attachment}
-                            />
-                        ))
-                        : ""
-                    : ""}
+                    && attachments.length > 1
+                    && attachments.map((attachment) => (
+                        <img
+                            key={attachment}
+                            alt="attachment"
+                            className={classes.grouppedImgs}
+                            src={attachment}
+                        />
+                    ))
+                }
             </Box>
-
-
         </>
     );
 };

@@ -9,12 +9,8 @@ const SenderBubble = ({ time, text, attachments }) => {
   return (
     <Box className={classes.root}>
       <Typography className={classes.date}>{time}</Typography>
-
-
       <Box>
-
         <DisplayBubble attachments={attachments} parentStyles={useStyles} text={text} />
-
       </Box>
     </Box>
   );

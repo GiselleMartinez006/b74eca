@@ -86,7 +86,7 @@ const Input = ({ otherUser, conversationId, user, postMessage }) => {
     setImgPreview([]);
     setLoading(true);
 
-    var promises = images.map(img => {
+    const promises = images.map(img => {
       let file = img[0];
 
       const data = new FormData();
@@ -97,7 +97,7 @@ const Input = ({ otherUser, conversationId, user, postMessage }) => {
       return instance.post(url, data)
     })
 
-    var resolvedPromises = await Promise.all(promises)
+    const resolvedPromises = await Promise.all(promises)
     const attachments = resolvedPromises.map(response => response.data.url)
 
     // add sender user info if posting to a brand new convo, so that the other user will have access to username, profile pic, etc.
@@ -119,7 +119,7 @@ const Input = ({ otherUser, conversationId, user, postMessage }) => {
   };
   return (
     <form className={classes.root} onSubmit={handleSubmit}>
-      {imgPreview.length || loading ? (
+      {(loading || imgPreview.length > 0) && (
         <Box className={classes.previewWrapper}>
           {!loading ? (
             imgPreview.map((img, index) => (
@@ -135,8 +135,6 @@ const Input = ({ otherUser, conversationId, user, postMessage }) => {
             <Typography variate="h1"> Loading... </Typography>
           )}
         </Box>
-      ) : (
-        ""
       )}
       <FormControl fullWidth hiddenLabel>
         <FilledInput
